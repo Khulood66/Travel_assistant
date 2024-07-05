@@ -58,7 +58,7 @@ translations = {
         'budget': "Enter your travel budget (in USD):",
         'days': "Enter the days you expect to stay at your destination:",
         'destination': "Enter your destination:",
-        'suggest_destinations': "Suggest Destinations",
+        'suggest_destinations': "Suggest Planning",
         'destination_suggestions': "Destination Suggestions:",
         'choose_destination': "Choose a destination for more details:",
         'activities': "Tourist activities in {destination}:",
@@ -74,15 +74,14 @@ translations = {
         'budget': "أدخل ميزانيتك للسفر (بالدولار):",
         'days': "ادخل الايام المتوقع جلوسها في وجهتك :",
         'destination': "أدخل المنطقة التي تحب ان تزورها:",
-        'suggest_destinations': "اقتراح وجهات",
+        'suggest_destinations': "اقتراح الخطة",
         'destination_suggestions': "اقتراحات اخرى :",
         'choose_destination': "اختر وجهة للحصول على تفاصيل أكثر:",
         'activities': "أنشطة سياحية في {destination}:",
         'accommodations': "أماكن الإقامة في {destination}:",
         'plan': "خطة مقترحة لمدة {inteval} في {destination}:",
-        'map': "خريطة الوجهة:",
         'error_details': "يرجى إدخال جميع التفاصيل.",
-        'error_coordinates': "لم يتم العثور على إحداثيات لهذه الوجهة."
+        
     }
 }
 
@@ -103,6 +102,7 @@ if st.sidebar.button(translations[lang_code]['suggest_destinations']):
             activities = get_activity_hotels_suggestions(destination,language)
             accommodations = get_accommodation_suggestions(destination, budget,language)
             plan=get_plan_suggestion(destination,language,inteval)
+            destinations = get_destination_suggestions(preferences, budget,language)
             
             st.subheader(translations[lang_code]['activities'].format(destination=destination))
             st.write(activities)
@@ -112,9 +112,10 @@ if st.sidebar.button(translations[lang_code]['suggest_destinations']):
 
             st.subheader(translations[lang_code]['plan'].format(inteval=inteval,destination=destination))
             st.write(plan)
-            destinations = get_destination_suggestions(preferences, budget,language)
+            
             st.subheader(translations[lang_code]['destination_suggestions'])
-            st.markdown(body=destinations,unsafe_allow_html=True)
+            st.markdown(destinations)
+           
 
     else:
         st.error(translations[lang_code]['error_details'])
